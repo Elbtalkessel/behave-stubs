@@ -1,18 +1,35 @@
 from _typeshed import Incomplete
-from typing import Callable, Any, Coroutine
-from behave.runner import Context
+from typing import Callable, Optional, TypeVar, Awaitable, overload
 
-has_asyncio: bool
+R = TypeVar("R")
 
-Fn = Callable[[Context, Any], Coroutine[Any, Any, None]]
+@overload
+def async_run_until_complete(
+    astep_func: Callable[..., Awaitable[R]]
+) -> Callable[..., R]:
+    ...
+
+@overload
+def async_run_until_complete(
+    *,
+    loop: Optional[Incomplete] = None,
+    timeout: Optional[float] = None,
+    async_context: Optional[str] = None,
+    should_close: bool = False
+) -> Callable[[Callable[..., Awaitable[R]]], Callable[..., R]]:
+    ...
 
 def async_run_until_complete(
-    astep_func: Fn,
-    loop: Incomplete | None = None,
-    timeout: Incomplete | None = None,
-    async_context: Incomplete | None = None,
-    should_close: bool = False,
-): ...
+    astep_func: Optional[Callable[..., Awaitable[R]]] = None,
+    *,
+    loop: Optional[Incomplete] = None,
+    timeout: Optional[float] = None,
+    async_context: Optional[str] = None,
+    should_close: bool = False
+) -> Callable[..., R] | Callable[[Callable[..., Awaitable[R]]], Callable[..., R]]:
+    ...
+
+has_asyncio: bool
 
 run_until_complete = async_run_until_complete
 
