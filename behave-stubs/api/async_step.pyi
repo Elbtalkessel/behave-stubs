@@ -1,9 +1,12 @@
 from _typeshed import Incomplete
+from typing import Callable, Any, Awaitable
 
 has_asyncio: bool
 
+Fn = Callable[[Any, Any], Awaitable[Incomplete]]
+
 def async_run_until_complete(
-    astep_func: Incomplete | None = None,
+    astep_func: Fn,
     loop: Incomplete | None = None,
     timeout: Incomplete | None = None,
     async_context: Incomplete | None = None,
