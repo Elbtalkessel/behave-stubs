@@ -45,7 +45,7 @@ class Configuration:
     name: Incomplete
     scope: Incomplete
     steps_catalog: Incomplete
-    userdata: Incomplete
+    userdata: dict[str, str]
     wip: Incomplete
     formatters: Incomplete
     reporters: Incomplete

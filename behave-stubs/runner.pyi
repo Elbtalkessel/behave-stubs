@@ -1,9 +1,11 @@
 from _typeshed import Incomplete
 from behave._types import ExceptionUtil as ExceptionUtil
 from behave.capture import CaptureController as CaptureController
-from behave.configuration import ConfigError as ConfigError
+from behave.configuration import ConfigError as ConfigError, Configuration
 from behave.formatter._registry import make_formatters as make_formatters
 from behave.runner_util import PathManager as PathManager, collect_feature_locations as collect_feature_locations, exec_file as exec_file, load_step_modules as load_step_modules, parse_features as parse_features
+from behave.model import Feature as Feature, Scenario as Scenario, Step as Step, Table as Table, Tag as Tag, Text as Text, Row as Row
+from behave.model_core import Status as Status
 from collections.abc import Generator
 
 class CleanupError(RuntimeError): ...
@@ -13,13 +15,18 @@ class Context:
     BEHAVE: str
     USER: str
     FAIL_ON_CLEANUP_ERRORS: bool
-    feature: Incomplete
-    text: Incomplete
-    table: Incomplete
-    stdout_capture: Incomplete
-    stderr_capture: Incomplete
-    log_capture: Incomplete
-    fail_on_cleanup_errors: Incomplete
+    feature: Feature
+    scenario: Scenario
+    tags: list[Tag]
+    aborted: bool = False
+    failed: bool = False
+    table: Table
+    text: str
+    config: Configuration
+    active_outline: Row
+    log_capture: CaptureController
+    stdout_capture: CaptureController
+    stderr_capture: CaptureController
     def __init__(self, runner) -> None: ...
     @staticmethod
     def ignore_cleanup_error(context, cleanup_func, exception) -> None: ...
