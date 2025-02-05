@@ -1,9 +1,10 @@
 from _typeshed import Incomplete
-from typing import Callable, Any, Awaitable
+from typing import Callable, Any, Coroutine
+from behave.runner import Context
 
 has_asyncio: bool
 
-Fn = Callable[[Any, Any], Awaitable[Incomplete]]
+Fn = Callable[[Context, Any], Coroutine[Any, Any, None]]
 
 def async_run_until_complete(
     astep_func: Fn,

@@ -1,5 +1,4 @@
 from _typeshed import Incomplete
-from behave._types import Unknown as Unknown
 from collections.abc import Generator
 
 def parse_bool(text): ...

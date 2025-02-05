@@ -1,5 +1,5 @@
 from _typeshed import Incomplete
-from typing import Callable
+from typing import Callable, TypeVar
 from behave.runner import Context
 
 __all__ = ["given", "when", "then", "step", "Given", "When", "Then", "Step"]
@@ -16,16 +16,13 @@ class StepRegistry:
     def find_match(self, step): ...
     def make_decorator(self, step_type): ...
 
-StepImpl = Callable[[Context], None]
+StepFunc = TypeVar("StepFunc", bound=Callable[[Context], None])
 
-def step(func: StepImpl, pattern: str) -> StepImpl: ...
-
-# Names in __all__ with no definition:
-#   Given
-#   Step
-#   Then
-#   When
-#   given
-#   step
-#   then
-#   when
+step = Callable[[StepFunc], StepFunc]
+given = step
+when = step
+then = step
+Given = given
+When = when
+Then = then
+Step = step
